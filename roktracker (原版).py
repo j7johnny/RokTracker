@@ -52,7 +52,7 @@ def link():
 #Initialize Options for dropdown box
 OPTIONS = []
 for i in range(38):
-	OPTIONS.append(25+i*25)
+	OPTIONS.append(15+i*25)
 	
 #Variables
 variable = tk.StringVar(root)
@@ -136,9 +136,8 @@ sheet1.write(0, 6, 'Tier 2 Kills', style)
 sheet1.write(0, 7, 'Tier 3 Kills', style)
 sheet1.write(0, 8, 'Tier 4 Kills', style)
 sheet1.write(0, 9, 'Tier 5 Kills', style)
-sheet1.write(0, 10, 'Ranged KillsPoint', style)
-sheet1.write(0, 11, 'Rss Assistance', style)
-sheet1.write(0, 12, 'Alliance', style)
+sheet1.write(0, 10,'Rss Assistance', style)
+sheet1.write(0, 11,'Alliance', style)
 
 #Position for next governor to check
 Y =[285, 390, 490, 590, 605]
@@ -163,6 +162,9 @@ def onkeypress(event):
 keyboard.on_press(onkeypress)
 
 
+
+
+
 for i in range(j,search_range):
 	if stop:
 		print("Scan Terminated! Saving the current progress...")
@@ -178,7 +180,6 @@ for i in range(j,search_range):
 	gov_kills_tier3 = 0
 	gov_kills_tier4 = 0
 	gov_kills_tier5 = 0
-	gov_kills_Ranged = 0
 	gov_rss_assistance = 0
 	#Open governor
 	device.shell(f'input tap 690 ' + str(Y[k]))
@@ -230,11 +231,9 @@ for i in range(j,search_range):
 	roi = (645, 362, 260, 40) #alliance tag
 	im_alliance_tag = image[int(roi[1]):int(roi[1]+roi[3]), int(roi[0]):int(roi[0]+roi[2])]
 	
-	#kills tier (第一次點擊KP細項)
+	#kills tier
 	device.shell(f'input tap 1118 350')
-	time.sleep(0.)
-	device.shell(f'input tap 1118 352')
-
+	
 	#1st image OCR
 	gov_id = read_ocr(im_gov_id)
 	gov_power = read_ocr(im_gov_power)
@@ -247,27 +246,23 @@ for i in range(j,search_range):
 				f.write(image)
 	image2 = cv2.imread('kills_tier.png') 	
 	image2 = cv2.fastNlMeansDenoisingColored(image2,None,20,20,7,21) 
-	roi = (861, 470, 160, 25) #tier 1
+	roi = (863, 597, 215, 26) #tier 1
 	im_kills_tier1 = image2[int(roi[1]):int(roi[1]+roi[3]), int(roi[0]):int(roi[0]+roi[2])]
 
-	roi = (861, 514, 160, 25) #tier 2
+	roi = (863, 642, 215, 26) #tier 2
 	im_kills_tier2 = image2[int(roi[1]):int(roi[1]+roi[3]), int(roi[0]):int(roi[0]+roi[2])]
 
-	roi = (861, 560, 160, 25) #tier 3
+	roi = (863, 687, 215, 26) #tier 3
 	im_kills_tier3 = image2[int(roi[1]):int(roi[1]+roi[3]), int(roi[0]):int(roi[0]+roi[2])]
 
-	roi = (861, 604, 160, 25) #tier 4
+	roi = (863, 732, 215, 26) #tier 4
 	im_kills_tier4 = image2[int(roi[1]):int(roi[1]+roi[3]), int(roi[0]):int(roi[0]+roi[2])]
 
-	roi = (861, 648, 160, 25) #tier 5
+	roi = (863, 777, 215, 26) #tier 5
 	im_kills_tier5 = image2[int(roi[1]):int(roi[1]+roi[3]), int(roi[0]):int(roi[0]+roi[2])]
 
-	roi = (1260, 750, 170, 26) #Ranged
-	im_kills_Ranged = image2[int(roi[1]):int(roi[1]+roi[3]), int(roi[0]):int(roi[0]+roi[2])]
-
 	#More info tab
-	device.shell(f'input tap 385 661') 
-	device.shell(f'input tap 385 660') 
+	device.shell(f'input tap 387 664') 
 	
 	##### Kill tier OCR #####
 	gov_kills_tier1 = pytesseract.image_to_string(im_kills_tier1,config="-c tessedit_char_whitelist=0123456789")
@@ -275,7 +270,6 @@ for i in range(j,search_range):
 	gov_kills_tier3 = pytesseract.image_to_string(im_kills_tier3,config="-c tessedit_char_whitelist=0123456789")
 	gov_kills_tier4 = pytesseract.image_to_string(im_kills_tier4,config="-c tessedit_char_whitelist=0123456789")
 	gov_kills_tier5 = pytesseract.image_to_string(im_kills_tier5,config="-c tessedit_char_whitelist=0123456789")
-	gov_kills_Ranged = pytesseract.image_to_string(im_kills_Ranged,config="-c tessedit_char_whitelist=0123456789")
 	time.sleep(0.8)
 	
 	
@@ -344,8 +338,6 @@ for i in range(j,search_range):
 		gov_kills_tier4 = '0\n'
 	if gov_kills_tier5 == '' :
 		gov_kills_tier5 = '0\n'
-	if gov_kills_Ranged == '' :
-		gov_kills_Ranged = '0\n'
 	if gov_rss_assistance == '' :
 		if gov_rss_assistance2 =='':
 			if gov_rss_assistance3 =='':
@@ -355,7 +347,7 @@ for i in range(j,search_range):
 		else:
 			gov_rss_assistance= gov_rss_assistance2
 
-	print('Governor ID: ' + str(gov_id) + '\nGovernor Name: ' + gov_name + '\nGovernor Power: ' + str(gov_power) + '\nGovernor Killpoints: ' + str(gov_killpoints) + '\nTier 1 kills: ' + str(gov_kills_tier1) + 'Tier 2 kills: ' + str(gov_kills_tier2) + 'Tier 3 kills: ' + str(gov_kills_tier3) + 'Tier 4 kills: ' +  str(gov_kills_tier4) + 'Tier 5 kills: ' + str(gov_kills_tier5) + '\nRanged KillsPoint: ' + str(gov_kills_Ranged) + 'Governor Dead Troops: ' + str(gov_dead) + '\nGovernor RSS Assistance: ' + str(gov_rss_assistance) +'\nAlliance: ' + str(alliance_tag) + '\n') 
+	print('Governor ID: ' + str(gov_id) + '\nGovernor Name: ' + gov_name + '\nGovernor Power: ' + str(gov_power) + '\nGovernor Killpoints: ' + str(gov_killpoints) + '\nTier 1 kills: ' + str(gov_kills_tier1) + 'Tier 2 kills: ' + str(gov_kills_tier2) + 'Tier 3 kills: ' + str(gov_kills_tier3) + 'Tier 4 kills: ' +  str(gov_kills_tier4) + 'Tier 5 kills: ' + str(gov_kills_tier5) + 'Governor Dead Troops: ' + str(gov_dead) + '\nGovernor RSS Assistance: ' + str(gov_rss_assistance) +'\nAlliance: ' + str(alliance_tag) + '\n') 
 	device.shell(f'input tap 1396 58') #close more info
 	time.sleep(0.4)
 	device.shell(f'input tap 1365 104') #close governor info
@@ -372,9 +364,8 @@ for i in range(j,search_range):
 	sheet1.write(i+1-j, 7, tointcheck(gov_kills_tier3))
 	sheet1.write(i+1-j, 8, tointcheck(gov_kills_tier4))
 	sheet1.write(i+1-j, 9, tointcheck(gov_kills_tier5))
-	sheet1.write(i+1-j, 10, tointcheck(gov_kills_Ranged))
-	sheet1.write(i+1-j, 11, tointcheck(gov_rss_assistance))
-	sheet1.write(i+1-j, 12, alliance_tag)
+	sheet1.write(i+1-j, 10, tointcheck(gov_rss_assistance))
+	sheet1.write(i+1-j, 11, alliance_tag)
 	
 #Save the excel file in the following format e.g. TOP300-2021-12-25-1253.xls or NEXT300-2021-12-25-1253.xls
 if resume_scanning :

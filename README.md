@@ -1,10 +1,10 @@
 # RokTracker
-Open Source Rise of Kingdoms Stats Management Tool. Track TOP (50-975) Players in Power/KillPoints. Creates a .xls file with in-game Id, Power, Kill Points, T1/T2/T3/T4/T5 Kills, Dead troops, RSS Assistance, Alliance **!NEW FEATURE!**.
+Open Source Rise of Kingdoms Stats Management Tool. Track TOP (50-975) Players in Power/KillPoints. Creates a .xls file with in-game Id, Power, Kill Points, T1/T2/T3/T4/T5 Kills, Dead troops, RSS Assistance.
 
 # Required
 1. Bluestacks 5 Installation
 https://cdn3.bluestacks.com/downloads/windows/nxt/5.4.100.1026/0129e8eb74f84fc396a1500329365a09/BlueStacksMicroInstaller_5.4.100.1026_native.exe?filename=BlueStacksMicroInstaller_5.4.100.1026_native_5ffb0694218e1b99e7000bed6dcbe547_0.exe
-2. **Python 3.6.8 Installation(MAKE SURE YOU CLICK ADD TO PATH OPTION IN INSTALLER)** https://www.python.org/ftp/python/3.6.8/python-3.6.8-amd64.exe
+2. Python 3.6.8 Installation https://www.python.org/ftp/python/3.6.8/python-3.6.8-amd64.exe
 3. Tesseract-OCR Installation https://digi.bib.uni-mannheim.de/tesseract/tesseract-ocr-w64-setup-v5.0.0.20211201.exe
 4. Adb Platform Tools Download and Extract(See Important Notes) https://dl.google.com/android/repository/platform-tools_r31.0.3-windows.zip
 5. Windows 10-Tested, Windows 7 or Windows 11 could be fine.
@@ -21,7 +21,7 @@ Everything should be like this and no more emulators should be running concurren
 2. You must run the .bat file without administration privileges.
 3. Change the installation path of Tesseract in .py file if your path is different. Open this file with your notepad and change the path to yours at 18th line of code. My path is C:\Program Files\Tesseract-OCR\tesseract.exe
 4. Platform tools folder should be extracted as a folder inside the Tracker's folder. Like the following image
-![image](https://user-images.githubusercontent.com/96141261/191936152-f0fbd0c0-a026-48d0-bd1e-07947e2805bd.png)
+![image](https://user-images.githubusercontent.com/96141261/146061510-8c39bc59-f8d2-4644-b005-3ce43d29a6cb.png)
 5. In order to get only your kingdoms ranks, the character that is currently logged in game must be in HOME KINGDOM, else you will get all the players in your KvK including players from different kingdoms.
 6. Game Language should be English. Anything else will cause trouble in detecting inactive governors. Change it only for scan, if yours is different and then switch back.
 7. The view before running the programme should be at the top of power rankings or at the top of kill points rankings. No move should be made in this window until scanning is done.
